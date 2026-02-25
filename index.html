@@ -7,46 +7,52 @@
 
 <style>
 body {
-    text-align: center;
+    margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
-    padding: 20px;
+    text-align: center;
 }
 
 h1 {
     color: #ff4d88;
-    font-size: 22px;
+    padding: 20px;
+    font-size: 20px;
 }
 
-img {
-    width: 90%;
-    max-width: 300px;
-    margin: 10px 0;
+/* CARROSSEL */
+.carousel {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+
+.slides img {
+    width: 100%;
+    max-width: 100%;
+    scroll-snap-align: center;
     border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
 }
 
 button {
-    width: 90%;
-    max-width: 300px;
-    padding: 14px;
-    margin: 8px 0;
+    margin: 15px 0;
+    padding: 14px 20px;
     border: none;
     border-radius: 25px;
     background-color: #ff66a3;
     color: white;
     font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:active {
-    transform: scale(0.97);
 }
 
 .mensagem {
     display: none;
-    margin: 15px 0;
+    padding: 15px;
     font-size: 16px;
     color: #99004d;
     line-height: 1.6;
@@ -54,52 +60,55 @@ button:active {
 }
 
 @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {opacity:0;}
+    to {opacity:1;}
 }
 </style>
 
 <script>
 function mostrar(id) {
-    var elemento = document.getElementById(id);
-    if (elemento.style.display === "block") {
-        elemento.style.display = "none";
-    } else {
-        elemento.style.display = "block";
-    }
+    var el = document.getElementById(id);
+    el.style.display = el.style.display === "block" ? "none" : "block";
 }
 </script>
 
 </head>
-
 <body>
 
 <h1>Fiz isso sorrindo… só porque lembrei de você ✨</h1>
 
-<img src="foto1.jpeg">
-<img src="foto2.jpeg">
-<img src="foto3.jpeg">
-<img src="foto4.jpeg">
-<img src="foto5.jpeg">
-
-<button onclick="document.getElementById('musica').play()">
-🎵 Aperta aqui
-</button>
-
-<audio id="musica" preload="auto">
-    <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
-<button onclick="mostrar('m1')">🌸 Poesia 1</button>
-<div id="m1" class="mensagem">
-Ariele, há pessoas que passam como vento...<br>
-(permanecer igual você colocou)
+<div class="carousel">
+  <div class="slides">
+    <img src="foto1.jpeg">
+    <img src="foto2.jpeg">
+    <img src="foto3.jpeg">
+    <img src="foto4.jpeg">
+    <img src="foto5.jpeg">
+  </div>
 </div>
 
-<!-- Repete para as outras poesias -->
-<!-- (Cole as outras poesias aqui igual já fizemos antes) -->
+<button onclick="document.getElementById('musica').play()">🎵 Aperta aqui</button>
+
+<audio id="musica">
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick="mostrar('p1')">🌸 Poesia 1</button>
+<div id="p1" class="mensagem">COLE AQUI SUA POESIA 1</div>
+
+<button onclick="mostrar('p2')">🌸 Poesia 2</button>
+<div id="p2" class="mensagem">COLE AQUI SUA POESIA 2</div>
+
+<button onclick="mostrar('p3')">🌸 Poesia 3</button>
+<div id="p3" class="mensagem">COLE AQUI SUA POESIA 3</div>
+
+<button onclick="mostrar('p4')">🌸 Poesia 4</button>
+<div id="p4" class="mensagem">COLE AQUI SUA POESIA 4</div>
+
+<button onclick="mostrar('p5')">🌸 Poesia 5</button>
+<div id="p5" class="mensagem">COLE AQUI SUA POESIA 5</div>
 
 </body>
-
 </html>
+
 
