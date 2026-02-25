@@ -9,14 +9,22 @@
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
     text-align: center;
+    color: #ffd6eb;
+    overflow-x: hidden;
 }
 
+/* TÍTULO */
 h1 {
-    color: #ff4d88;
     padding: 20px;
     font-size: 20px;
+    animation: brilho 3s infinite alternate;
+}
+
+@keyframes brilho {
+    from { text-shadow: 0 0 5px #ff99cc; }
+    to { text-shadow: 0 0 20px #ff4da6; }
 }
 
 /* CARROSSEL */
@@ -28,35 +36,50 @@ h1 {
 
 .slides {
     display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    transition: transform 0.5s ease-in-out;
 }
 
 .slides img {
     width: 100%;
-    max-width: 100%;
-    scroll-snap-align: center;
-    border-radius: 15px;
+    border-radius: 20px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
+/* SETAS */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 77, 136, 0.6);
+    color: white;
+    border: none;
+    font-size: 25px;
+    padding: 10px 15px;
+    border-radius: 50%;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* BOTÕES */
 button {
     margin: 15px 0;
-    padding: 14px 20px;
+    padding: 14px 22px;
     border: none;
-    border-radius: 25px;
-    background-color: #ff66a3;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff4da6, #ff1a75);
     color: white;
     font-size: 16px;
 }
 
+/* POESIA */
 .mensagem {
     display: none;
-    padding: 15px;
+    padding: 20px;
     font-size: 16px;
-    color: #99004d;
     line-height: 1.6;
-    animation: fade 0.8s ease-in-out;
+    animation: fade 1s ease-in-out;
 }
 
 @keyframes fade {
@@ -66,9 +89,43 @@ button {
 </style>
 
 <script>
+let index = 0;
+
+function mostrarSlide(n) {
+    const slides = document.querySelector(".slides");
+    const total = document.querySelectorAll(".slides img").length;
+    index = (n + total) % total;
+    slides.style.transform = "translateX(" + (-index * 100) + "%)";
+}
+
+function nextSlide() {
+    mostrarSlide(index + 1);
+}
+
+function prevSlide() {
+    mostrarSlide(index - 1);
+}
+
 function mostrar(id) {
     var el = document.getElementById(id);
     el.style.display = el.style.display === "block" ? "none" : "block";
+}
+
+/* FADE SUAVE NA MÚSICA */
+function tocarMusica() {
+    const musica = document.getElementById("musica");
+    musica.volume = 0;
+    musica.play();
+
+    let vol = 0;
+    const fade = setInterval(() => {
+        if (vol < 1) {
+            vol += 0.05;
+            musica.volume = vol;
+        } else {
+            clearInterval(fade);
+        }
+    }, 200);
 }
 </script>
 
@@ -85,9 +142,12 @@ function mostrar(id) {
     <img src="foto4.jpeg">
     <img src="foto5.jpeg">
   </div>
+
+  <button class="prev" onclick="prevSlide()">❮</button>
+  <button class="next" onclick="nextSlide()">❯</button>
 </div>
 
-<button onclick="document.getElementById('musica').play()">🎵 Aperta aqui</button>
+<button onclick="tocarMusica()">🎵 Aperta aqui</button>
 
 <audio id="musica">
   <source src="musica.mp3" type="audio/mpeg">
@@ -156,6 +216,7 @@ mesmo sem saber.
 
 </body>
 </html>
+
 
 
 
