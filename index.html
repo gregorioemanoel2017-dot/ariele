@@ -15,10 +15,43 @@ body {
     overflow-x: hidden;
 }
 
+/* TELA SURPRESA */
+#surpresa {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #1a1a40, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 999;
+    animation: fadeIn 2s;
+}
+
+#surpresa h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+#surpresa button {
+    padding: 14px 25px;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(45deg, #ff4da6, #ff1a75);
+    color: white;
+    font-size: 16px;
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
 /* TÍTULO */
 h1 {
     padding: 20px;
-    font-size: 20px;
+    font-size: 22px;
     animation: brilho 3s infinite alternate;
 }
 
@@ -64,7 +97,7 @@ h1 {
 
 /* BOTÕES */
 button {
-    margin: 15px 0;
+    margin: 15px 8px;
     padding: 14px 22px;
     border: none;
     border-radius: 30px;
@@ -76,9 +109,9 @@ button {
 /* POESIA */
 .mensagem {
     display: none;
-    padding: 20px;
-    font-size: 16px;
-    line-height: 1.6;
+    padding: 25px;
+    font-size: 20px; /* AUMENTADA */
+    line-height: 1.8;
     animation: fade 1s ease-in-out;
 }
 
@@ -111,7 +144,7 @@ function mostrar(id) {
     el.style.display = el.style.display === "block" ? "none" : "block";
 }
 
-/* FADE SUAVE NA MÚSICA */
+/* FADE IN */
 function tocarMusica() {
     const musica = document.getElementById("musica");
     musica.volume = 0;
@@ -127,10 +160,38 @@ function tocarMusica() {
         }
     }, 200);
 }
+
+/* FADE OUT */
+function pausarMusica() {
+    const musica = document.getElementById("musica");
+    let vol = musica.volume;
+
+    const fade = setInterval(() => {
+        if (vol > 0.05) {
+            vol -= 0.05;
+            musica.volume = vol;
+        } else {
+            musica.pause();
+            clearInterval(fade);
+        }
+    }, 200);
+}
+
+/* ENTRAR NO SITE */
+function entrarSite() {
+    document.getElementById("surpresa").style.display = "none";
+    tocarMusica();
+}
 </script>
 
 </head>
 <body>
+
+<!-- TELA SURPRESA -->
+<div id="surpresa">
+    <h2>Tenho uma surpresa pra você 💗</h2>
+    <button onclick="entrarSite()">Entrar ✨</button>
+</div>
 
 <h1>Fiz isso sorrindo… só porque lembrei de você ✨</h1>
 
@@ -147,7 +208,8 @@ function tocarMusica() {
   <button class="next" onclick="nextSlide()">❯</button>
 </div>
 
-<button onclick="tocarMusica()">🎵 Aperta aqui</button>
+<button onclick="tocarMusica()">🎵 Tocar Música</button>
+<button onclick="pausarMusica()">⏸️ Pausar Música</button>
 
 <audio id="musica">
   <source src="musica.mp3" type="audio/mpeg">
